@@ -1,0 +1,8 @@
+{
+    "name": "Pause-Inc/When",
+    "autoload": {
+        "psr-0": {
+            "When": "src/"
+        }
+    }
+}
