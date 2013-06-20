@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false"
+         syntaxCheck="true"
+         bootstrap="vendor/autoload.php"
+>
+   <testsuite name="Riaka Image Test Suite">
+      <directory>src/Riaka/Component/Image/Tests</directory>
+   </testsuite>
+</phpunit>
