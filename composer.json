@@ -1,5 +1,5 @@
 {
-    "name": "Pause-Inc/When",
+    "name": "pause-inc/when",
     "autoload": {
         "psr-0": {
             "When": "src/"

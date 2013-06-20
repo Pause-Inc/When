@@ -96,7 +96,7 @@ class Iterator extends When implements \Iterator
         return false;
     }
 
-    public function enable_cache($cache)
+    public function enableCache($cache)
     {
         $this->cache = $cache;
     }

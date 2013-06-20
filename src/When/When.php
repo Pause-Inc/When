@@ -12,93 +12,78 @@ namespace When;
 
 class When
 {
-    protected $frequency;
+    protected $frequency = null;
 
     protected $start_date;
     protected $try_date;
 
     protected $end_date;
 
-    protected $gobymonth;
+    protected $gobymonth = false;
     protected $bymonth;
 
-    protected $gobyweekno;
+    protected $gobyweekno = false;
     protected $byweekno;
 
-    protected $gobyyearday;
+    protected $gobyyearday = false;
     protected $byyearday;
 
-    protected $gobymonthday;
+    protected $gobymonthday = false;
     protected $bymonthday;
 
-    protected $gobyday;
+    protected $gobyday = false;
     protected $byday;
 
-    protected $gobysetpos;
+    protected $gobysetpos = false;
     protected $bysetpos;
 
-    protected $suggestions;
+    protected $suggestions = array();
 
-    protected $count;
-    protected $counter;
+    /**
+     * This will be set if a count() is specified
+     * @var integer
+     */
+    protected $count = 0;
 
-    protected $goenddate;
+    /**
+     * How many *valid* results we returned.
+     * @var integer
+     */
+    protected $counter = 0;
 
-    protected $interval;
+    /**
+     * The interval to increase the pattern by
+     * @var integer
+     */
+    protected $interval = 1;
 
-    protected $wkst;
+    /**
+     * What day of the week does it start on?
+     * @var integer
+     */
+    protected $wkst = 0;
 
-    protected $valid_week_days;
-    protected $valid_frequency;
+    protected $valid_week_days = array('SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA');
+    protected $valid_frequency = array('SECONDLY', 'MINUTELY', 'HOURLY', 'DAILY', 'WEEKLY', 'MONTHLY', 'YEARLY');
 
-    protected $keep_first_month_day;
+    protected $keep_first_month_day = null;
 
     /**
      * __construct
      */
     public function __construct()
     {
-        $this->frequency = null;
-
-        $this->gobymonth = false;
         $this->bymonth = range(1,12);
-
-        $this->gobymonthday = false;
         $this->bymonthday = range(1,31);
-
-        $this->gobyday = false;
-        // setup the valid week days (0 = sunday)
-        $this->byday = range(0,6);
-
-        $this->gobyyearday = false;
+        $this->byday = range(0,6); // setup the valid week days (0 = sunday)
         $this->byyearday = range(0,366);
-
-        $this->gobysetpos = false;
         $this->bysetpos = range(1,366);
 
-        $this->gobyweekno = false;
         // setup the range for valid weeks
         $this->byweekno = range(0,54);
 
-        $this->suggestions = array();
-
-        // this will be set if a count() is specified
-        $this->count = 0;
-        // how many *valid* results we returned
-        $this->counter = 0;
-
         // max date we'll return
         $this->end_date = new \DateTime('9999-12-31');
-
-        // the interval to increase the pattern by
-        $this->interval = 1;
-
-        // what day does the week start on? (0 = sunday)
-        $this->wkst = 0;
-
-        $this->valid_week_days = array('SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA');
-
-        $this->valid_frequency = array('SECONDLY', 'MINUTELY', 'HOURLY', 'DAILY', 'WEEKLY', 'MONTHLY', 'YEARLY');
     }
 
     /**
@@ -374,7 +359,7 @@ class When
     }
 
     // this creates a basic list of dates to "try"
-    protected function create_suggestions()
+    protected function createSuggestions()
     {
         switch ($this->frequency) {
             case "YEARLY":
@@ -403,8 +388,6 @@ class When
         $month_day = $this->try_date->format('j');
         $month = $this->try_date->format('n');
         $year = $this->try_date->format('Y');
-
-
 
         $timestamp = $this->try_date->format('H:i:s');
 
@@ -573,7 +556,7 @@ class When
         }
     }
 
-    public function valid_date($date)
+    public function validDate($date)
     {
         $year = $date->format('Y');
         $month = $date->format('n');
@@ -621,15 +604,13 @@ class When
     public function next()
     {
         // check the counter is set
-        if ($this->count !== 0) {
-            if ($this->counter >= $this->count) {
-                return false;
-            }
+        if ($this->count !== 0 && $this->counter >= $this->count) {
+            return false;
         }
 
         // create initial set of suggested dates
         if (count($this->suggestions) === 0) {
-            $this->create_suggestions();
+            $this->createSuggestions();
         }
 
         // loop through the suggested dates
@@ -643,14 +624,14 @@ class When
             }
 
             // make sure it falls within the allowed days
-            if ($this->valid_date($try_date) === true) {
+            if ($this->validDate($try_date) === true) {
                 $this->counter++;
 
                 return $try_date;
             } else {
                 // we might be out of suggested days, so load some more
                 if (count($this->suggestions) === 0) {
-                    $this->create_suggestions();
+                    $this->createSuggestions();
                 }
             }
         }
