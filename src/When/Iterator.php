@@ -1,33 +1,50 @@
 <?php
 /**
- * Name: When_Iterator
- * Author: Thomas Planer <tplaner@gmail.com>
- * Location: http://github.com/tplaner/When
- * Created: November 2010
- * Description: Implements PHP's Object Iteration Interface (http://us.php.net/Iterator & http://php.net/manual/en/class.iterator.php) so you can use the object within a foreach loop.
- *
- * Thanks to Andrew Collington for suggesting the implementation of an Iterator and supplying the base code for it.
+ * When
+ * Copyright (c) Thomas Planer
  */
 
 namespace When;
 
+/**
+ * Implements PHP's Object Iteration Interface (http://us.php.net/Iterator &
+ * http://php.net/manual/en/class.iterator.php) so you can use the object
+ * within a foreach loop.
+ *
+ * Thanks to Andrew Collington for suggesting the implementation of an
+ * Iterator and supplying the base code for it.
+ *
+ * @author Thomas Planer <tplaner@gmail.com>
+ * @author Ryan Kadwell <ryan@pause.ca>
+ */
 class Iterator extends Recurrence implements \Iterator
 {
-    // store the current position in the array
+    /**
+     * store the current position in the array
+     * @var integer
+     */
     protected $position = 0;
 
-    // store an individual result if caching is disabled
+    /**
+     * store an individual result if caching is disabled
+     */
     protected $result;
 
-    // store all of the results
+    /**
+     * store all of the results
+     * @var array
+     */
     protected $results = array();
 
     protected $cache = false;
 
-    // caching the results will cause the script to
-    // use more memory but less cpu (should also perform quicker)
-    //
-    // results should always be the same regardless of cache
+    /**
+     * caching the results will cause the script to use more memory but less
+     * cpu (should also perform quicker) results should always be the same
+     * regardless of cache
+     *
+     * @param boolean $cache Do we want to cache results
+     */
     public function __construct($cache = false)
     {
         parent::__construct();
@@ -57,13 +74,19 @@ class Iterator extends Recurrence implements \Iterator
         }
     }
 
-    // only used if caching is enabled
+    /**
+     * only used if caching is enabled
+     *
+     * @return integer
+     */
     public function key()
     {
         return $this->position;
     }
 
-    // only used if caching is enabled
+    /**
+     * only used if caching is enabled
+     */
     public function next()
     {
         ++$this->position;

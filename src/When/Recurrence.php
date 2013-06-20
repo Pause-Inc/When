@@ -1,15 +1,19 @@
 <?php
 /**
- * Name: When
- * Author: Thomas Planer <tplaner@gmail.com>
- * Location: http://github.com/tplaner/When
- * Created: September 2010
- * Description: Determines the next date of recursion given an iCalendar "rrule" like pattern.
- * Requirements: PHP 5.3+ - makes extensive use of the Date and Time library (http://us2.php.net/manual/en/book.datetime.php)
+ * When
+ * Copyright (c) Thomas Planer
  */
 
 namespace When;
 
+/**
+ * Class to work with recurrences using rrule type patterns.
+ *
+ * @link http://www.ietf.org/rfc/rfc2445.txt
+ *
+ * @author Thomas Planer <tplaner@gmail.com>
+ * @author Ryan Kadwell <ryan@pause.ca>
+ */
 class Recurrence
 {
     protected $frequency = null;
@@ -69,7 +73,7 @@ class Recurrence
     protected $keep_first_month_day = null;
 
     /**
-     * Setup the allowed ranges
+     * Setup the default recurrence ranges
      */
     public function __construct()
     {
@@ -78,7 +82,6 @@ class Recurrence
         $this->byday = range(0,6); // 0 = sunday
         $this->byyearday = range(0,366);
         $this->bysetpos = range(1,366);
-
         // setup the range for valid weeks
         $this->byweekno = range(0,54);
 
@@ -122,7 +125,13 @@ class Recurrence
         return $this;
     }
 
-    // accepts an rrule directly
+    /**
+     * Build a recurrence directly from an rrule
+     *
+     * @param string $rrule RFC2445
+     *
+     * @return When\Recurrence
+     */
     public function rrule($rrule)
     {
         // strip off a trailing semi-colon
@@ -183,7 +192,13 @@ class Recurrence
         return $this;
     }
 
-    //max number of items to return based on the pattern
+    /**
+     * max number of items to return based on the pattern
+     *
+     * @param  integer $count
+     *
+     * @return When\Recurrence
+     */
     public function count($count)
     {
         $this->count = (int) $count;
@@ -191,7 +206,13 @@ class Recurrence
         return $this;
     }
 
-    // how often the recurrence rule repeats
+    /**
+     * how often the recurrence rule repeats
+     *
+     * @param integer $interval
+     *
+     * @return When\Recurrence
+     */
     public function interval($interval)
     {
         $this->interval = (int) $interval;
@@ -199,7 +220,13 @@ class Recurrence
         return $this;
     }
 
-    // starting day of the week
+    /**
+     * starting day of the week
+     *
+     * @param  string $day
+     *
+     * @return When\Recurrence
+     */
     public function wkst($day)
     {
         switch ($day) {
@@ -229,7 +256,13 @@ class Recurrence
         return $this;
     }
 
-    // max date
+    /**
+     * Max date to recur until
+     *
+     * @param DateTime $end_date
+     *
+     * @return When\Recurrence
+     */
     public function until($end_date)
     {
         try {
@@ -359,7 +392,11 @@ class Recurrence
         return $this;
     }
 
-    // this creates a basic list of dates to "try"
+    /**
+     * this creates a basic list of dates to "try"
+     *
+     * @return array
+     */
     protected function createSuggestions()
     {
         switch ($this->frequency) {
@@ -601,7 +638,9 @@ class Recurrence
         }
     }
 
-    // return the next valid DateTime object which matches the pattern and follows the rules
+    /**
+     * return the next valid DateTime object which matches the pattern and follows the rules
+     */
     public function next()
     {
         // check the counter is set
