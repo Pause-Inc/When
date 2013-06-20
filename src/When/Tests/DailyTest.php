@@ -2,7 +2,7 @@
 
 namespace When\Tests;
 
-use When\When;
+use When\Recurrence;
 use DateTime;
 
 class DailyTest extends \PHPUnit_Framework_TestCase
@@ -25,7 +25,7 @@ class DailyTest extends \PHPUnit_Framework_TestCase
         $results[] = new DateTime('1997-09-10 09:00:00');
         $results[] = new DateTime('1997-09-11 09:00:00');
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('19970902T090000', 'daily')->count(10);
 
         foreach ($results as $result) {
@@ -154,7 +154,7 @@ class DailyTest extends \PHPUnit_Framework_TestCase
         $results[] = new DateTime('1997-12-22 09:00:00');
         $results[] = new DateTime('1997-12-23 09:00:00');
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('19970902T090000', 'daily')->until('19971224T000000');
 
         foreach ($results as $result) {
@@ -217,7 +217,7 @@ class DailyTest extends \PHPUnit_Framework_TestCase
         $results[] = new DateTime('1997-12-01 09:00:00');
         $results[] = new DateTime('1997-12-03 09:00:00');
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('19970902T090000', 'daily')->interval(2)->count(47);
 
         foreach ($results as $result) {
@@ -238,7 +238,7 @@ class DailyTest extends \PHPUnit_Framework_TestCase
         $results[] = new DateTime('1997-10-02 09:00:00');
         $results[] = new DateTime('1997-10-12 09:00:00');
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('19970902T090000', 'daily')->interval(10)->count(5);
 
         foreach ($results as $result) {
@@ -347,7 +347,7 @@ class DailyTest extends \PHPUnit_Framework_TestCase
         $results[] = new DateTime('2000-01-30 09:00:00');
         $results[] = new DateTime('2000-01-31 09:00:00');
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('19980101T090000', 'daily')->until('20000131T140000')->bymonth(array(1));
 
         foreach ($results as $result) {

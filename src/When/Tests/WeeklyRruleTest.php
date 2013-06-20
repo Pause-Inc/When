@@ -2,7 +2,7 @@
 
 namespace When\Tests;
 
-use When\When;
+use When\Recurrence;
 use DateTime;
 
 class WeeklyRruleTest extends \PHPUnit_Framework_TestCase
@@ -25,7 +25,7 @@ class WeeklyRruleTest extends \PHPUnit_Framework_TestCase
         $results[] = new DateTime('1997-10-28 09:00:00');
         $results[] = new DateTime('1997-11-04 09:00:00');
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('19970902T090000')->rrule('FREQ=WEEKLY;COUNT=10');
 
         foreach ($results as $result) {
@@ -58,7 +58,7 @@ class WeeklyRruleTest extends \PHPUnit_Framework_TestCase
         $results[] = new DateTime('1997-12-16 09:00:00');
         $results[] = new DateTime('1997-12-23 09:00:00');
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('19970902T090000')->rrule('FREQ=WEEKLY;UNTIL=19971224T000000Z');
 
         foreach ($results as $result) {
@@ -87,7 +87,7 @@ class WeeklyRruleTest extends \PHPUnit_Framework_TestCase
         $results[] = new DateTime('1998-02-03 09:00:00');
         $results[] = new DateTime('1998-02-17 09:00:00');
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('19970902T090000')->rrule('FREQ=WEEKLY;INTERVAL=2;WKST=SU');
 
         foreach ($results as $result) {
@@ -115,7 +115,7 @@ class WeeklyRruleTest extends \PHPUnit_Framework_TestCase
         $results[] = new DateTime('1997-09-30 09:00:00');
         $results[] = new DateTime('1997-10-02 09:00:00');
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('19970902T090000')->rrule('FREQ=WEEKLY;UNTIL=19971007T000000Z;WKST=SU;BYDAY=TU,TH');
 
         foreach ($results as $result) {
@@ -124,7 +124,7 @@ class WeeklyRruleTest extends \PHPUnit_Framework_TestCase
 
         unset($r);
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('19970902T090000')->rrule('FREQ=WEEKLY;COUNT=10;WKST=SU;BYDAY=TU,TH');
 
         foreach ($results as $result) {
@@ -165,7 +165,7 @@ class WeeklyRruleTest extends \PHPUnit_Framework_TestCase
         $results[] = new DateTime('1997-12-12 09:00:00');
         $results[] = new DateTime('1997-12-22 09:00:00');
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('19970901T090000')->rrule('FREQ=WEEKLY;INTERVAL=2;UNTIL=19971224T000000Z;WKST=SU;BYDAY=MO,WE,FR');
 
         foreach ($results as $result) {
@@ -189,7 +189,7 @@ class WeeklyRruleTest extends \PHPUnit_Framework_TestCase
         $results[] = new DateTime('1997-10-14 09:00:00');
         $results[] = new DateTime('1997-10-16 09:00:00');
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('19970902T090000')->rrule('FREQ=WEEKLY;INTERVAL=2;COUNT=8;WKST=SU;BYDAY=TU,TH');
 
         foreach ($results as $result) {
@@ -209,7 +209,7 @@ class WeeklyRruleTest extends \PHPUnit_Framework_TestCase
         $results[] = new DateTime('1997-08-19 09:00:00');
         $results[] = new DateTime('1997-08-24 09:00:00');
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('19970805T090000')->rrule('FREQ=WEEKLY;INTERVAL=2;COUNT=4;BYDAY=TU,SU;WKST=MO');
 
         foreach ($results as $result) {
@@ -229,7 +229,7 @@ class WeeklyRruleTest extends \PHPUnit_Framework_TestCase
         $results[] = new DateTime('1997-08-19 09:00:00');
         $results[] = new DateTime('1997-08-31 09:00:00');
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('19970805T090000')->rrule('FREQ=WEEKLY;INTERVAL=2;COUNT=4;BYDAY=TU,SU;WKST=SU');
 
         foreach ($results as $result) {

@@ -1,104 +1,92 @@
 <?php
 /**
- * Name: When
- * Author: Thomas Planer <tplaner@gmail.com>
- * Location: http://github.com/tplaner/When
- * Created: September 2010
- * Description: Determines the next date of recursion given an iCalendar "rrule" like pattern.
- * Requirements: PHP 5.3+ - makes extensive use of the Date and Time library (http://us2.php.net/manual/en/book.datetime.php)
+ * When
+ * Copyright (c) Thomas Planer
  */
 
 namespace When;
 
-class When
+/**
+ * Class to work with recurrences using rrule type patterns.
+ *
+ * @link http://www.ietf.org/rfc/rfc2445.txt
+ *
+ * @author Thomas Planer <tplaner@gmail.com>
+ * @author Ryan Kadwell <ryan@pause.ca>
+ */
+class Recurrence
 {
-    protected $frequency;
+    protected $frequency = null;
 
     protected $start_date;
     protected $try_date;
 
     protected $end_date;
 
-    protected $gobymonth;
+    protected $gobymonth = false;
     protected $bymonth;
 
-    protected $gobyweekno;
+    protected $gobyweekno = false;
     protected $byweekno;
 
-    protected $gobyyearday;
+    protected $gobyyearday = false;
     protected $byyearday;
 
-    protected $gobymonthday;
+    protected $gobymonthday = false;
     protected $bymonthday;
 
-    protected $gobyday;
+    protected $gobyday = false;
     protected $byday;
 
-    protected $gobysetpos;
+    protected $gobysetpos = false;
     protected $bysetpos;
 
-    protected $suggestions;
-
-    protected $count;
-    protected $counter;
-
-    protected $goenddate;
-
-    protected $interval;
-
-    protected $wkst;
-
-    protected $valid_week_days;
-    protected $valid_frequency;
-
-    protected $keep_first_month_day;
+    protected $suggestions = array();
 
     /**
-     * __construct
+     * This will be set if a count() is specified
+     * @var integer
+     */
+    protected $count = 0;
+
+    /**
+     * How many *valid* results we returned.
+     * @var integer
+     */
+    protected $counter = 0;
+
+    /**
+     * The interval to increase the pattern by
+     * @var integer
+     */
+    protected $interval = 1;
+
+    /**
+     * What day of the week does it start on?
+     * @var integer
+     */
+    protected $wkst = 0;
+
+    protected $valid_week_days = array('SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA');
+    protected $valid_frequency = array('SECONDLY', 'MINUTELY', 'HOURLY', 'DAILY', 'WEEKLY', 'MONTHLY', 'YEARLY');
+
+    protected $keep_first_month_day = null;
+
+    /**
+     * Setup the default recurrence ranges
      */
     public function __construct()
     {
-        $this->frequency = null;
-
-        $this->gobymonth = false;
         $this->bymonth = range(1,12);
-
-        $this->gobymonthday = false;
         $this->bymonthday = range(1,31);
-
-        $this->gobyday = false;
-        // setup the valid week days (0 = sunday)
-        $this->byday = range(0,6);
-
-        $this->gobyyearday = false;
+        $this->byday = range(0,6); // 0 = sunday
         $this->byyearday = range(0,366);
-
-        $this->gobysetpos = false;
         $this->bysetpos = range(1,366);
-
-        $this->gobyweekno = false;
         // setup the range for valid weeks
         $this->byweekno = range(0,54);
 
-        $this->suggestions = array();
-
-        // this will be set if a count() is specified
-        $this->count = 0;
-        // how many *valid* results we returned
-        $this->counter = 0;
-
         // max date we'll return
         $this->end_date = new \DateTime('9999-12-31');
-
-        // the interval to increase the pattern by
-        $this->interval = 1;
-
-        // what day does the week start on? (0 = sunday)
-        $this->wkst = 0;
-
-        $this->valid_week_days = array('SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA');
-
-        $this->valid_frequency = array('SECONDLY', 'MINUTELY', 'HOURLY', 'DAILY', 'WEEKLY', 'MONTHLY', 'YEARLY');
     }
 
     /**
@@ -137,7 +125,13 @@ class When
         return $this;
     }
 
-    // accepts an rrule directly
+    /**
+     * Build a recurrence directly from an rrule
+     *
+     * @param string $rrule RFC2445
+     *
+     * @return When\Recurrence
+     */
     public function rrule($rrule)
     {
         // strip off a trailing semi-colon
@@ -198,7 +192,13 @@ class When
         return $this;
     }
 
-    //max number of items to return based on the pattern
+    /**
+     * max number of items to return based on the pattern
+     *
+     * @param  integer $count
+     *
+     * @return When\Recurrence
+     */
     public function count($count)
     {
         $this->count = (int) $count;
@@ -206,7 +206,13 @@ class When
         return $this;
     }
 
-    // how often the recurrence rule repeats
+    /**
+     * how often the recurrence rule repeats
+     *
+     * @param integer $interval
+     *
+     * @return When\Recurrence
+     */
     public function interval($interval)
     {
         $this->interval = (int) $interval;
@@ -214,7 +220,13 @@ class When
         return $this;
     }
 
-    // starting day of the week
+    /**
+     * starting day of the week
+     *
+     * @param  string $day
+     *
+     * @return When\Recurrence
+     */
     public function wkst($day)
     {
         switch ($day) {
@@ -244,7 +256,13 @@ class When
         return $this;
     }
 
-    // max date
+    /**
+     * Max date to recur until
+     *
+     * @param DateTime $end_date
+     *
+     * @return When\Recurrence
+     */
     public function until($end_date)
     {
         try {
@@ -315,12 +333,13 @@ class When
 
                 $as = '+';
 
-                // 0 mean no occurence is set
+                // 0 means no occurence is set
                 $occ = 0;
 
                 if ($len == 3) {
                     $occ = substr($day, 0, 1);
                 }
+
                 if ($len == 4) {
                     $as = substr($day, 0, 1);
                     $occ = substr($day, 1, 1);
@@ -373,8 +392,12 @@ class When
         return $this;
     }
 
-    // this creates a basic list of dates to "try"
-    protected function create_suggestions()
+    /**
+     * this creates a basic list of dates to "try"
+     *
+     * @return array
+     */
+    protected function createSuggestions()
     {
         switch ($this->frequency) {
             case "YEARLY":
@@ -403,8 +426,6 @@ class When
         $month_day = $this->try_date->format('j');
         $month = $this->try_date->format('n');
         $year = $this->try_date->format('Y');
-
-
 
         $timestamp = $this->try_date->format('H:i:s');
 
@@ -573,7 +594,7 @@ class When
         }
     }
 
-    public function valid_date($date)
+    public function validDate($date)
     {
         $year = $date->format('Y');
         $month = $date->format('n');
@@ -617,19 +638,19 @@ class When
         }
     }
 
-    // return the next valid DateTime object which matches the pattern and follows the rules
+    /**
+     * return the next valid DateTime object which matches the pattern and follows the rules
+     */
     public function next()
     {
         // check the counter is set
-        if ($this->count !== 0) {
-            if ($this->counter >= $this->count) {
-                return false;
-            }
+        if ($this->count !== 0 && $this->counter >= $this->count) {
+            return false;
         }
 
         // create initial set of suggested dates
         if (count($this->suggestions) === 0) {
-            $this->create_suggestions();
+            $this->createSuggestions();
         }
 
         // loop through the suggested dates
@@ -643,14 +664,14 @@ class When
             }
 
             // make sure it falls within the allowed days
-            if ($this->valid_date($try_date) === true) {
+            if ($this->validDate($try_date) === true) {
                 $this->counter++;
 
                 return $try_date;
             } else {
                 // we might be out of suggested days, so load some more
                 if (count($this->suggestions) === 0) {
-                    $this->create_suggestions();
+                    $this->createSuggestions();
                 }
             }
         }

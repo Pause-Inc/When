@@ -1,9 +1,8 @@
 When
 ====
-
 [![Build Status](https://secure.travis-ci.org/Pause-Inc/When.png)](http://travis-ci.org/Pause-Inc/When)
 
-Date/Calendar recursion library for PHP 5.2+
+Date/Calendar recursion library for PHP
 
 Author: Thomas Planer
 
@@ -33,7 +32,7 @@ Initial set of tests were created from the examples found within RFC5545 ([http:
 
 Initializing the class
 
-    $when = new When();
+    $when = new Recurrence();
 
 Once you have initialized the class you can create a recurring event by calling on the recur method
 
@@ -58,7 +57,7 @@ More documentation to come, please take a look at the unit tests for an understa
 
 The next 5 occurrences of Friday the 13th:
 
-	$r = new When();
+	$r = new Recurrence();
 	$r->recur(new DateTime(), 'monthly')
 	  ->count(5)
 	  ->byday(array('FR'))
@@ -74,7 +73,7 @@ Every four years, the first Tuesday after a Monday in November, for the next 20 
 	// this is the next election date
 	$start = new DateTime('2012-09-06');
 
-	$r = new When();
+	$r = new Recurrence();
 	$r->recur($start, 'yearly')
 	  ->until($start->modify('+20 years'))
 	  ->interval(4)
@@ -89,7 +88,7 @@ Every four years, the first Tuesday after a Monday in November, for the next 20 
 
 You can now pass raw RRULE's to the class:
 
-	$r = new When();
+	$r = new Recurrence();
 	$r->recur('19970922T090000')->rrule('FREQ=MONTHLY;COUNT=6;BYDAY=-2MO');
 
 	while($result = $r->next())
@@ -150,28 +149,6 @@ There are 78 tests, 1410 assertions currently.
 	OK (78 tests, 1410 assertions)
 
 ---
-###License
-
-Copyright (c) 2010 Thomas Planer
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-
 
   [1]: http://github.com/seejohnrun/ice_cube
   [2]: http://labix.org/python-dateutil
