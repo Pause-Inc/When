@@ -33,7 +33,7 @@ Initial set of tests were created from the examples found within RFC5545 ([http:
 
 Initializing the class
 
-    $when = new When();
+    $when = new Recurrence();
 
 Once you have initialized the class you can create a recurring event by calling on the recur method
 
@@ -58,7 +58,7 @@ More documentation to come, please take a look at the unit tests for an understa
 
 The next 5 occurrences of Friday the 13th:
 
-	$r = new When();
+	$r = new Recurrence();
 	$r->recur(new DateTime(), 'monthly')
 	  ->count(5)
 	  ->byday(array('FR'))
@@ -74,7 +74,7 @@ Every four years, the first Tuesday after a Monday in November, for the next 20 
 	// this is the next election date
 	$start = new DateTime('2012-09-06');
 
-	$r = new When();
+	$r = new Recurrence();
 	$r->recur($start, 'yearly')
 	  ->until($start->modify('+20 years'))
 	  ->interval(4)
@@ -89,7 +89,7 @@ Every four years, the first Tuesday after a Monday in November, for the next 20 
 
 You can now pass raw RRULE's to the class:
 
-	$r = new When();
+	$r = new Recurrence();
 	$r->recur('19970922T090000')->rrule('FREQ=MONTHLY;COUNT=6;BYDAY=-2MO');
 
 	while($result = $r->next())

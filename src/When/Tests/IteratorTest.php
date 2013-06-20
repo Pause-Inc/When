@@ -1,7 +1,6 @@
 <?php
 namespace When\Tests;
 
-use When\When;
 use When\Iterator;
 use DateTime;
 

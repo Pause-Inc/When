@@ -10,7 +10,7 @@
 
 namespace When;
 
-class When
+class Recurrence
 {
     protected $frequency = null;
 
@@ -69,13 +69,13 @@ class When
     protected $keep_first_month_day = null;
 
     /**
-     * __construct
+     * Setup the allowed ranges
      */
     public function __construct()
     {
         $this->bymonth = range(1,12);
         $this->bymonthday = range(1,31);
-        $this->byday = range(0,6); // setup the valid week days (0 = sunday)
+        $this->byday = range(0,6); // 0 = sunday
         $this->byyearday = range(0,366);
         $this->bysetpos = range(1,366);
 
@@ -300,12 +300,13 @@ class When
 
                 $as = '+';
 
-                // 0 mean no occurence is set
+                // 0 means no occurence is set
                 $occ = 0;
 
                 if ($len == 3) {
                     $occ = substr($day, 0, 1);
                 }
+
                 if ($len == 4) {
                     $as = substr($day, 0, 1);
                     $occ = substr($day, 1, 1);

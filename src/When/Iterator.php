@@ -11,7 +11,7 @@
 
 namespace When;
 
-class Iterator extends When implements \Iterator
+class Iterator extends Recurrence implements \Iterator
 {
     // store the current position in the array
     protected $position = 0;

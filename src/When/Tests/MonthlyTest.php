@@ -2,7 +2,7 @@
 
 namespace When\Tests;
 
-use When\When;
+use When\Recurrence;
 use DateTime;
 
 class MonthlyTest extends \PHPUnit_Framework_TestCase
@@ -25,7 +25,7 @@ class MonthlyTest extends \PHPUnit_Framework_TestCase
         $results[] = new DateTime('1998-05-01 09:00:00');
         $results[] = new DateTime('1998-06-05 09:00:00');
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('19970905T090000', 'monthly')->count(10)->byday(array('1FR'));
 
         foreach ($results as $result) {
@@ -45,7 +45,7 @@ class MonthlyTest extends \PHPUnit_Framework_TestCase
         $results[] = new DateTime('1997-11-07 09:00:00');
         $results[] = new DateTime('1997-12-05 09:00:00');
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('19970905T090000', 'monthly')->until('19971224T000000')->byday(array('1FR'));
 
         foreach ($results as $result) {
@@ -71,7 +71,7 @@ class MonthlyTest extends \PHPUnit_Framework_TestCase
         $results[] = new DateTime('1998-05-03 09:00:00');
         $results[] = new DateTime('1998-05-31 09:00:00');
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('19970905T090000', 'monthly')->interval(2)->count(10)->byday(array('1SU', '-1SU'));
 
         foreach ($results as $result) {
@@ -93,7 +93,7 @@ class MonthlyTest extends \PHPUnit_Framework_TestCase
         $results[] = new DateTime('1998-01-19 09:00:00');
         $results[] = new DateTime('1998-02-16 09:00:00');
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('19970922T090000', 'monthly')->count(6)->byday(array('-2MO'));
 
         foreach ($results as $result) {
@@ -115,7 +115,7 @@ class MonthlyTest extends \PHPUnit_Framework_TestCase
         $results[] = new DateTime('1998-01-29 09:00:00');
         $results[] = new DateTime('1998-02-26 09:00:00');
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('19970902T090000', 'monthly')->count(6)->bymonthday(array(-3));
 
         foreach ($results as $result) {
@@ -141,7 +141,7 @@ class MonthlyTest extends \PHPUnit_Framework_TestCase
         $results[] = new DateTime('1998-01-02 09:00:00');
         $results[] = new DateTime('1998-01-15 09:00:00');
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('19970902T090000', 'monthly')->count(10)->bymonthday(array(2,15));
 
         foreach ($results as $result) {
@@ -167,7 +167,7 @@ class MonthlyTest extends \PHPUnit_Framework_TestCase
         $results[] = new DateTime('1998-01-31 09:00:00');
         $results[] = new DateTime('1998-02-01 09:00:00');
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('19970930T090000', 'monthly')->count(10)->bymonthday(array(1,-1));
 
         foreach ($results as $result) {
@@ -193,7 +193,7 @@ class MonthlyTest extends \PHPUnit_Framework_TestCase
         $results[] = new DateTime('1999-03-12 09:00:00');
         $results[] = new DateTime('1999-03-13 09:00:00');
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('19970910T090000', 'monthly')->interval(18)->count(10)->bymonthday(array(10,11,12,13,14,15));
 
         foreach ($results as $result) {
@@ -227,7 +227,7 @@ class MonthlyTest extends \PHPUnit_Framework_TestCase
         $results[] = new DateTime('1998-03-24 09:00:00');
         $results[] = new DateTime('1998-03-31 09:00:00');
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('19970902T090000', 'monthly')->interval(2)->count(18)->byday(array('TU'));
 
         foreach ($results as $result) {
@@ -248,7 +248,7 @@ class MonthlyTest extends \PHPUnit_Framework_TestCase
         $results[] = new DateTime('1999-08-13 09:00:00');
         $results[] = new DateTime('2000-10-13 09:00:00');
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('19970902T090000', 'monthly')->count(5)->byday(array('FR'))->bymonthday(array(13));
 
         foreach ($results as $result) {
@@ -274,7 +274,7 @@ class MonthlyTest extends \PHPUnit_Framework_TestCase
         $results[] = new DateTime('1998-05-09 09:00:00');
         $results[] = new DateTime('1998-06-13 09:00:00');
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('19970913T090000', 'monthly')->count(10)->byday(array('SA'))->bymonthday(array(7,8,9,10,11,12,13));
 
         foreach ($results as $result) {
@@ -293,7 +293,7 @@ class MonthlyTest extends \PHPUnit_Framework_TestCase
         $results[] = new DateTime('1997-10-07 09:00:00');
         $results[] = new DateTime('1997-11-06 09:00:00');
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('19970904T090000', 'monthly')->count(3)->byday(array('TU', 'WE', 'TH'))->bysetpos(array(3));
 
         foreach ($results as $result) {
@@ -314,7 +314,7 @@ class MonthlyTest extends \PHPUnit_Framework_TestCase
         $results[] = new DateTime('2007-03-15 09:00:00');
         $results[] = new DateTime('2007-03-30 09:00:00');
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('20070115T090000', 'monthly')->count(5)->bymonthday(array(15,30));
 
         foreach ($results as $result) {
@@ -337,7 +337,7 @@ class MonthlyTest extends \PHPUnit_Framework_TestCase
         $results[] = new DateTime('1998-02-26 09:00:00');
         $results[] = new DateTime('1998-03-30 09:00:00');
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('19970929T090000', 'monthly')->count(7)->byday(array('MO', 'TU', 'WE', 'TH', 'FR'))->bysetpos(array(-2));
 
         foreach ($results as $result) {

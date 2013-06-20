@@ -2,7 +2,7 @@
 
 namespace When\Tests;
 
-use When\When;
+use When\Recurrence;
 use DateTime;
 
 class DailyRruleTest extends \PHPUnit_Framework_TestCase
@@ -25,7 +25,7 @@ class DailyRruleTest extends \PHPUnit_Framework_TestCase
         $results[] = new DateTime('1997-09-10 09:00:00');
         $results[] = new DateTime('1997-09-11 09:00:00');
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('19970902T090000')->rrule('FREQ=DAILY;COUNT=10');
 
         foreach ($results as $result) {
@@ -154,7 +154,7 @@ class DailyRruleTest extends \PHPUnit_Framework_TestCase
         $results[] = new DateTime('1997-12-22 09:00:00');
         $results[] = new DateTime('1997-12-23 09:00:00');
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('19970902T090000')->rrule('FREQ=DAILY;UNTIL=19971224T000000Z');
 
         foreach ($results as $result) {
@@ -217,7 +217,7 @@ class DailyRruleTest extends \PHPUnit_Framework_TestCase
         $results[] = new DateTime('1997-12-01 09:00:00');
         $results[] = new DateTime('1997-12-03 09:00:00');
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('19970902T090000')->count(47)->rrule('FREQ=DAILY;INTERVAL=2');
 
         foreach ($results as $result) {
@@ -238,7 +238,7 @@ class DailyRruleTest extends \PHPUnit_Framework_TestCase
         $results[] = new DateTime('1997-10-02 09:00:00');
         $results[] = new DateTime('1997-10-12 09:00:00');
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('19970902T090000')->rrule('FREQ=DAILY;INTERVAL=10;COUNT=5');
 
         foreach ($results as $result) {
@@ -347,7 +347,7 @@ class DailyRruleTest extends \PHPUnit_Framework_TestCase
         $results[] = new DateTime('2000-01-30 09:00:00');
         $results[] = new DateTime('2000-01-31 09:00:00');
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('19980101T090000')->rrule('FREQ=DAILY;UNTIL=20000131T140000Z;BYMONTH=1');
 
         foreach ($results as $result) {
@@ -376,7 +376,7 @@ class DailyRruleTest extends \PHPUnit_Framework_TestCase
         $results[] = new DateTime('1997-09-15 09:00:00');
         $results[] = new DateTime('1997-09-16 09:00:00');
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('19970902T090000')->rrule('FREQ=DAILY');
 
         foreach ($results as $result) {
@@ -401,7 +401,7 @@ class DailyRruleTest extends \PHPUnit_Framework_TestCase
         $results[] = new DateTime('2000-01-03 09:00:00');
         $results[] = new DateTime('2000-01-04 09:00:00');
 
-        $r = new When();
+        $r = new Recurrence();
         $r->recur('19991225T090000')->rrule('FREQ=DAILY');
 
         foreach ($results as $result) {
