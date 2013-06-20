@@ -10,7 +10,7 @@
          syntaxCheck="true"
          bootstrap="vendor/autoload.php"
 >
-   <testsuite name="Riaka Image Test Suite">
-      <directory>src/Riaka/Component/Image/Tests</directory>
+   <testsuite name="When Test Suite">
+      <directory>src/When/Tests</directory>
    </testsuite>
 </phpunit>
