@@ -1,5 +1,6 @@
 {
     "name": "pause-inc/when",
+    "license": "MIT",
     "autoload": {
         "psr-0": {
             "When": "src/"
