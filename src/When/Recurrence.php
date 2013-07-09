@@ -9,7 +9,7 @@ namespace When;
 /**
  * Class to work with recurrences using rrule type patterns.
  *
- * @link http://www.ietf.org/rfc/rfc2445.txt
+ * @link http://tools.ietf.org/html/rfc5545
  *
  * @author Thomas Planer <tplaner@gmail.com>
  * @author Ryan Kadwell <ryan@pause.ca>
